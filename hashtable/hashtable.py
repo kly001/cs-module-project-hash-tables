@@ -22,6 +22,7 @@ class HashTable:
 
     def __init__(self, capacity):
         # Your code here
+       self.capacity = [None] * MIN_CAPACITY
 
 
     def get_num_slots(self):
@@ -35,6 +36,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        return len(self.capacity)
 
 
     def get_load_factor(self):
@@ -44,6 +46,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        pass
 
 
     def fnv1(self, key):
@@ -54,6 +57,7 @@ class HashTable:
         """
 
         # Your code here
+        pass
 
 
     def djb2(self, key):
@@ -63,6 +67,7 @@ class HashTable:
         Implement this, and/or FNV-1.
         """
         # Your code here
+        pass
 
 
     def hash_index(self, key):
@@ -82,6 +87,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        pass
 
 
     def delete(self, key):
@@ -93,6 +99,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        pass
 
 
     def get(self, key):
@@ -104,6 +111,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        pass
 
 
     def resize(self, new_capacity):
@@ -114,6 +122,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        pass
 
 
 
@@ -151,3 +160,64 @@ if __name__ == "__main__":
         print(ht.get(f"line_{i}"))
 
     print("")
+#-------------------------------------------------
+
+#Source:  http://dictionary.sensagent.com/fowler%20noll%20vo%20hash%20function/en-en/
+
+# The basic algorithm of the FNV-1 hash is: 
+
+#     hash = FNV_offset_basis 
+#     for each byte_of_data to be hashed
+#         hash = hash × FNV_prime
+#         hash = hash XOR byte_of_data
+
+#     return hash 
+   
+
+
+# The basic algorithm of the FNV-1a hash is:
+
+# hash = FNV_offset_basis
+# for each octet_of_data to be hashed
+# hash = hash XOR octet_of_data
+# hash = hash × FNV_prime
+# return hash
+
+#------------------------------------------------------
+#  DBJ2 hashing function: example of a simple hashing algorithm with acceptable collision rate
+
+# def _djb2x_hash(string):
+#     hash = 5381
+#     byte_array = string.encode('utf-8')
+
+#     for byte in byte_array:
+#         # the modulus keeps it 32-bit, python ints don't overflow
+#         hash = ((hash * 33) ^ byte) % 0x100000000
+
+#     return hash
+
+
+# OR
+
+
+# def hash_djb2(s):                                                                                                                                
+#     hash = 5381
+#     for x in s:
+#         hash = (( hash << 5) + hash) + ord(x)
+#     return hash 
+
+
+# OR
+
+# unsigned int DJBHash(const char* str, unsigned int length)
+# {
+#    unsigned int hash = 5381;
+#    unsigned int i    = 0;
+
+#    for (i = 0; i < length; ++str, ++i)
+#    {
+#       hash = ((hash << 5) + hash) + (*str);
+#    }
+
+#    return hash;
+# }

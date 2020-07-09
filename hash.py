@@ -41,6 +41,7 @@
 # my_hash2("Karen")
 
 #----------------------------------------------------------------
+# Sample Hash Function
 
 def my_hash3(str):
     s_utf8 = str.encode()
@@ -50,6 +51,7 @@ def my_hash3(str):
         total += c
 
     return total
+#---------------------------------------------------------------
 
 karen_index = my_hash3("Karen") # 497; modulo = 2
 
@@ -99,4 +101,17 @@ print(my_arr[key_index])
     # 1. Hash the key/word, get some number back from the hash function
     # 2. Modulo the number with array length to find the index
     # 3. Look up value at that index, return it
+
+#-------------------------------------------------------------
+
+# Hash Function ideal speeds:
+    # in a hash table ==> FAST when looking up stuff
+    #  to hash passwords and store hashes instead of plain text passwords ==> relatively SLOW
+
+# Output of a hashing function is a HASH, or digest
+
+# hashlib ==> contains hashing functions
+
+# A good hash function (like SHA256) gives a totally unique output
+# Can be used as an ID aka fingerprint of a document (document === big string)
 
