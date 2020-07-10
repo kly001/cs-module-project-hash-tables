@@ -22,7 +22,8 @@ class HashTable:
 
     def __init__(self, capacity):
         # Your code here
-       self.capacity = [None] * MIN_CAPACITY
+       self.capacity = capacity
+       self.storage = [None] * MIN_CAPACITY
 
 
     def get_num_slots(self):
@@ -46,7 +47,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        pass
+        # number of pairs / number of buckets
 
 
     def fnv1(self, key):
@@ -94,9 +95,9 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
-        pass
-
+        location = self.hash_index(key)
+        self.storage[location] = HashTableEntry(key, value)
+       
 
     def delete(self, key):
         """
@@ -118,8 +119,14 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
-        pass
+        location = self.hash_index(key)
+        hash_entry = self.storage[location]
+
+        if hash_entry is not None:
+            return hash_entry.value
+
+        return None
+        
 
 
     def resize(self, new_capacity):
@@ -161,11 +168,28 @@ if __name__ == "__main__":
     ht.resize(ht.capacity * 2)
     new_capacity = ht.get_num_slots()
 
-    print(f"\nResized from {old_capacity} to {new_capacity}.\n")
+    # print(f"\nResized from {old_capacity} to {new_capacity}.\n")
 
-    # Test if data intact after resizing
-    for i in range(1, 13):
-        print(ht.get(f"line_{i}"))
+    # # Test if data intact after resizing
+    # for i in range(1, 13):
+    #     print(ht.get(f"line_{i}"))
 
-    print("")
+    # print("")
 
+
+# FNV Resources:
+# https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+# FNV Parameters: (note: problem asks for 64-bit, therefore...)
+# - FNV_prime = 1099511628211 (in decimal)
+# - FNV_offset_basis = 14695981039346656037 (in decimal)
+# - FNV_prime = 0x00000100000001B3 (in hexadecimal)
+# - FNV_offset_basis = 0xcbf29ce484222325 (in hexadecimal)
+# FNV-1 Hash Algorithm (according to wiki):
+# algorithm fnv-1 is
+#     hash := FNV_offset_basis
+#     for each byte_of_data to be hashed do:
+#         hash := hash × FNV_prime
+#         hash := hash XOR byte_of_data
+#     return hash 
+# Tip:
+# bytes_representation = str(key).encode()
