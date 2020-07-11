@@ -20,10 +20,10 @@ class HashTable:
     Implement this.
     """
 
-    def __init__(self, capacity):
+    def __init__(self, capacity = MIN_CAPACITY):
         # Your code here
        self.capacity = capacity
-       self.storage = [None] * MIN_CAPACITY
+       self.storage = [None] * capacity
 
 
     def get_num_slots(self):
@@ -37,7 +37,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        return len(self.capacity)
+        return len(self.storage)
 
 
     def get_load_factor(self):
@@ -56,13 +56,14 @@ class HashTable:
 
         Implement this, and/or DJB2.
         """
-
+        FNV_prime = 1099511628211 
+        FNV_offset_basis = 14695981039346656037
         # Your code here
-        # hash = offset_basis
-        # for each octet_of_data to be hashed
-        #     hash = hash * FNV_prime
-        #     hash = hash xor octet_of_data
-        # return hash
+        hash =  FNV_offset_basis
+        for x in key:
+            hash = hash * FNV_prime
+            hash = hash ** ord(x)
+        return hash
     
 
     def djb2(self, key):
@@ -108,7 +109,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        pass
+        location = self.hash_index(key)
+        self.storage[location] = None
 
 
     def get(self, key):
@@ -168,13 +170,13 @@ if __name__ == "__main__":
     ht.resize(ht.capacity * 2)
     new_capacity = ht.get_num_slots()
 
-    # print(f"\nResized from {old_capacity} to {new_capacity}.\n")
+    print(f"\nResized from {old_capacity} to {new_capacity}.\n")
 
-    # # Test if data intact after resizing
-    # for i in range(1, 13):
-    #     print(ht.get(f"line_{i}"))
+    # Test if data intact after resizing
+    for i in range(1, 13):
+        print(ht.get(f"line_{i}"))
 
-    # print("")
+    print("")
 
 
 # FNV Resources:
