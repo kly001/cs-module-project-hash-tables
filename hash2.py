@@ -19,6 +19,11 @@ class HashTableItem:
         self.next = next 
 
 
+def my_first_hash(str):
+    str_utf8 = str.encode()
+    for c in str_utf8:
+        print(c)
+
 
 def my_hash(str):
     s_utf8 = str.encode()
@@ -53,13 +58,16 @@ def delete(key):
     index= hashed_key % len(hash_table)
     hash_table[index] = None
 
+my_first_hash("hello")
+print(my_hash("hello")) # Prints the sum of all values in my_first_hash
+
 put("hello", "hello world")
 put("olleh", "overriding original")
 
 print(hash_table)
-print(get("hello"))
-delete("hello")
-print(hash_table)
+# print(get("hello"))
+# delete("hello")
+# print(hash_table)
 
 #------------------------------------------------------
 

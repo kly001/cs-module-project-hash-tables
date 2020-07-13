@@ -32,13 +32,13 @@
 # print("The ASCII value for lowercase letter 'e' is:" ,ord("e"))
 # print("The ASCII value for lowercase letter 'n' is:" ,ord("n"))
 
-# def my_hash2(str):
-#     s_utf8 = str.encode()
+def my_hash2(str):
+    s_utf8 = str.encode()
 
-#     for c in s_utf8:
-#         print(c)
-# print("The UTF-8 values for the letters in 'Karen':")
-# my_hash2("Karen")
+    for c in s_utf8:
+        print(c)
+print("The UTF-8 values for the letters in the string 'Karen' are:")
+my_hash2("Karen")
 
 #----------------------------------------------------------------
 # Sample Hash Function
@@ -51,6 +51,9 @@ def my_hash3(str):
         total += c
 
     return total
+
+print("The sum of the UTF-8 values for the letters in the string 'Karen' are: ")
+print(my_hash3("Karen"))
 #---------------------------------------------------------------
 
 karen_index = my_hash3("Karen") # 497; modulo = 2
@@ -63,33 +66,33 @@ my_arr[karen_index] = "Karen"
 
 print(my_arr)
 
-#------------------------------------------
-world_index = my_hash3("world!") # 585; modulo = 0
-print(" Initial world_index value:",world_index)  #585
+# #------------------------------------------
+# world_index = my_hash3("world!") # 585; modulo = 0
+# print(" Initial world_index value:",world_index)  #585
 
-world_index = world_index % len(my_arr)
-print("world_index modulo my_arr length:",world_index)
-my_arr[world_index] = "world value"
+# world_index = world_index % len(my_arr)
+# print("world_index modulo my_arr length:",world_index)
+# my_arr[world_index] = "world value"
 
-print(my_arr)
+# print(my_arr)
 
-#----------------------------------------------
-#  Insert into our hash map (PUT)
-key = "key"
-print("Initial key_index value:",my_hash3(key)) #329
+# #----------------------------------------------
+# #  Insert into our hash map (PUT)
+# key = "key"
+# print("Initial key_index value:",my_hash3(key)) #329
 
-key_index = my_hash3(key) % len(my_arr)
-print("key_index modulo my_arr length: ",key_index)
+# key_index = my_hash3(key) % len(my_arr)
+# print("key_index modulo my_arr length: ",key_index)
 
-my_arr[key_index] = "value"
+# my_arr[key_index] = "value"
 
-print(my_arr)
+# print(my_arr)
 
-#-------------------------------------------------
+# #-------------------------------------------------
 
-#access the value (GET)
-key_index = my_hash3(key) % len(my_arr)
-print(my_arr[key_index])
+# #access the value (GET)
+# key_index = my_hash3(key) % len(my_arr)
+# print(my_arr[key_index])
 
 #----------------------------------------------------
 # Steps to PUT (NOTE => Assumes you have an array and a hash function):

@@ -7,6 +7,7 @@ class HashTableEntry:
     def __init__(self, key, value):
         self.key = key
         self.value = value
+        self.next = None  #  This line starts turning this into a linked list node
     
     def __repr__(self):
         return f'HashTableEntry({repr(self.key)},{repr(self.value)})'
@@ -46,22 +47,47 @@ def delete(key):
 
 
 put("Karen", 497)
-put("cat", 514)
+print(data)
+put("bar", 999)
+print(data)
+put("baz", 111)
+print(data)
 
-#print(data)
-
-print(get("Karen"))
+print(get("bar"))
 
 # print(my_hashing_function("dog"))  #314
 # print(my_hashing_function("cat"))  #312
-# print(my_hashing_function("elephant"))#849
-# print(my_hashing_function("foo"))#324
-# print(my_hashing_function("bar"))#309
+# print(my_hashing_function("elephant")) #849
+# print(my_hashing_function("foo")) #324
+# print(my_hashing_function("bar")) #309
+# print(my_hashing_function("baz")) #309
 
 # print(get_slot("dog"))  # 2
 # print(get_slot("cat"))  # 0
 # print(get_slot("elephant"))# 1
 # print(get_slot("foo"))# 4
 # print(get_slot("bar"))# 5
+# print(get_slot("baz")) # 5
 
-print (get("bar"))
+# print (get("bar"))
+
+"""
+PUT Alogorithm:
+    * Find the slot for the key
+    * Search the linked list for the key
+    * If found, update it
+    * If not found, make a newHashTableEntry and add it to the list
+
+GET Alogiorithm:
+    * Find the slot for the key
+    * Search the linked list for the key
+    * If found, return the value
+    * If not found, return None
+
+DELETE Algorithm:
+    * Find the slot for the key
+    * Search the linked list for the key
+    * If found, delete it from the linked list, then return the deleted node
+    * If not found, return None
+
+"""
