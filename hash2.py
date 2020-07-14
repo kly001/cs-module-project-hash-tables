@@ -37,11 +37,11 @@ def my_hash(str):
 def put(key, value):
     hashed_key = my_hash(key)
 
-    index= hashed_key % len(hash_table)
+    index = hashed_key % len(hash_table)
 
     # print a warning if we are going to overwrite
     if hash_table[index] is not None:
-        print("What is happening?")
+        print("You are about to overwrite a value....")
 
     hash_table[index] = HashTableItem(key, value)
 

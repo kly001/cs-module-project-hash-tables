@@ -47,7 +47,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        # number of pairs / number of buckets
+        # number of things stored in the hash table / number of slots 
+        
 
 
     def fnv1(self, key):
@@ -177,21 +178,3 @@ if __name__ == "__main__":
         print(ht.get(f"line_{i}"))
 
     print("")
-
-
-# FNV Resources:
-# https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
-# FNV Parameters: (note: problem asks for 64-bit, therefore...)
-# - FNV_prime = 1099511628211 (in decimal)
-# - FNV_offset_basis = 14695981039346656037 (in decimal)
-# - FNV_prime = 0x00000100000001B3 (in hexadecimal)
-# - FNV_offset_basis = 0xcbf29ce484222325 (in hexadecimal)
-# FNV-1 Hash Algorithm (according to wiki):
-# algorithm fnv-1 is
-#     hash := FNV_offset_basis
-#     for each byte_of_data to be hashed do:
-#         hash := hash × FNV_prime
-#         hash := hash XOR byte_of_data
-#     return hash 
-# Tip:
-# bytes_representation = str(key).encode()
