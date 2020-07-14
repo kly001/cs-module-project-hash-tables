@@ -11,6 +11,10 @@ class HashTableEntry:
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
 
 class HashTable:
     """
@@ -24,6 +28,7 @@ class HashTable:
         # Your code here
        self.capacity = capacity
        self.storage = [None] * capacity
+       self.item_total = None
 
 
     def get_num_slots(self):
@@ -48,7 +53,8 @@ class HashTable:
         """
         # Your code here
         # number of things stored in the hash table / number of slots 
-        
+        load = self.item_total/self.capacity
+        return load
 
 
     def fnv1(self, key):
