@@ -20,16 +20,16 @@ class LinkList:
     def __init__(self):
         self.head = None
 
-    # def find(self, value):
-    #     current = self.head
+    def find(self, value):
+        current = self.head
 
-    #     while current is not None:
-    #         if current.value == value:
-    #             return current
+        while current is not None:
+            if current.value == value:
+                return current
 
-    #         current = current.next
+            current = current.next
         
-    #     return None
+        return None
     
     # def insert_at_tail(self, value):
     #     node = ListNode(value)
@@ -44,37 +44,37 @@ class LinkList:
     #             current = current.next
     #         current.next = node
 
-    # def delete(self, value):
-    #     current = self.head
+    def delete(self, value):
+        current = self.head
 
-    #     # if there is nothing to delete
-    #     if current is None:
-    #         return None
+        # if there is nothing to delete
+        if current is None:
+            return None
 
-    #     # when deleting head
-    #     if current.value == value:
-    #         self.head = current.next
-    #         return current
+        # when deleting head
+        if current.value == value:
+            self.head = current.next
+            return current
 
-    #     # when deleting something else
-    #     else:
-    #         previous = current
-    #         current = current.next
+        # when deleting something else
+        else:
+            previous = current
+            current = current.next
 
-    #         while current is not None:
-    #             if current.value == value: # found it!
-    #                 previous.next = current.next  # cut current out!
-    #                 return current # return our deleted node
+            while current is not None:
+                if current.value == value: # found it!
+                    previous.next = current.next  # cut current out!
+                    return current # return our deleted node
 
-    #             else:
-    #                 previous = current
-    #                 current = current.next
+                else:
+                    previous = current
+                    current = current.next
 
-    #         return None # if we got here, nothing was found!
+            return None # if we got here, nothing was found!
 
-    # def insert_at_head(self, node):
-        # node.next = self.head
-        # self.head = node
+    def insert_at_head(self, node):
+        node.next = self.head
+        self.head = node
 
 
 
@@ -89,7 +89,7 @@ class HashTable:
     def __init__(self, capacity = MIN_CAPACITY):
         # Your code here
        self.capacity = capacity
-       self.storage = [None] * capacity
+       self.storage = [LinkList()] * capacity
        self.item_total = None
 
 
@@ -200,17 +200,17 @@ class HashTable:
         # return None
         #------------------------------------------
         # Updated Code
+
         location = self.hash_index(key)
         current = self.storage[location]
 
-        while current:
+        while current is not None:
             if current.key == key:
                 return current.value
+            
             current = current.next
-        return None
+        return current
 
-
-        
 
 
     def resize(self, new_capacity):
