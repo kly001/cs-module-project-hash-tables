@@ -11,9 +11,71 @@ class HashTableEntry:
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
-class LinkedList:
+# class ListNode:
+#         def __init__(self, value):
+#             self.value = value
+#             self.next = None
+
+class LinkList:
     def __init__(self):
         self.head = None
+
+    # def find(self, value):
+    #     current = self.head
+
+    #     while current is not None:
+    #         if current.value == value:
+    #             return current
+
+    #         current = current.next
+        
+    #     return None
+    
+    # def insert_at_tail(self, value):
+    #     node = ListNode(value)
+
+    #     # if there is no head
+    #     if self.head is None:
+    #         self.head = node
+    #     else:
+    #         current = self.head
+
+    #         while current.next is not None:
+    #             current = current.next
+    #         current.next = node
+
+    # def delete(self, value):
+    #     current = self.head
+
+    #     # if there is nothing to delete
+    #     if current is None:
+    #         return None
+
+    #     # when deleting head
+    #     if current.value == value:
+    #         self.head = current.next
+    #         return current
+
+    #     # when deleting something else
+    #     else:
+    #         previous = current
+    #         current = current.next
+
+    #         while current is not None:
+    #             if current.value == value: # found it!
+    #                 previous.next = current.next  # cut current out!
+    #                 return current # return our deleted node
+
+    #             else:
+    #                 previous = current
+    #                 current = current.next
+
+    #         return None # if we got here, nothing was found!
+
+    # def insert_at_head(self, node):
+        # node.next = self.head
+        # self.head = node
+
 
 
 class HashTable:
@@ -128,13 +190,26 @@ class HashTable:
 
         Implement this.
         """
+        #  # Old Code
+        # location = self.hash_index(key)
+        # hash_entry = self.storage[location]
+
+        # if hash_entry is not None:
+        #     return hash_entry.value
+
+        # return None
+        #------------------------------------------
+        # Updated Code
         location = self.hash_index(key)
-        hash_entry = self.storage[location]
+        current = self.storage[location]
 
-        if hash_entry is not None:
-            return hash_entry.value
-
+        while current:
+            if current.key == key:
+                return current.value
+            current = current.next
         return None
+
+
         
 
 
