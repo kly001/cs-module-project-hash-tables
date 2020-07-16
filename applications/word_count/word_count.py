@@ -3,8 +3,10 @@ def word_count(s):
 # def Count_words(s):
    word_count = 1
    for i in range(len(s)):
-      if(s[i] == ' ' or s == '\n' or s == '\t'):
-         word_count += 1
+        if(s[i]=="" or s[i]==''):
+            word_count = 0
+        elif(s[i] == ' ' or s == '\n' or s == '\t'):
+            word_count += 1
    return word_count
 # s = input("String to search is :")
 # total = word_count(s)

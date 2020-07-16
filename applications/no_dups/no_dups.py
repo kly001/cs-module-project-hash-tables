@@ -1,7 +1,7 @@
 def no_dups(s):
     # Your code here
-
-
+  return ' '.join(set(s.split()))
+ 
 
 if __name__ == "__main__":
     print(no_dups(""))
