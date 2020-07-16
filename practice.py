@@ -144,6 +144,7 @@ class LinkedList:
         while current is not None:
             if current.value == value:  # Delete this one
                 previous.next = current.next # Cuts out the old node
+                current.next = None
                 return current
             else:
                 previous = previous.next
