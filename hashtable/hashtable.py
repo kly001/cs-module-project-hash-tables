@@ -204,12 +204,22 @@ class HashTable:
         location = self.hash_index(key)
         current = self.storage[location]
 
-        while current is not None:
-            if current.key == key:
-                return current.value
+        # while current is not None:
+        #     if current.key == key:
+        #         return current.value
             
-            current = current.next
-        return current
+        #     current = current.next
+        # return current
+        if current is None:
+            return None
+
+        else:
+            while current is not None:
+                if current.key == key:
+                    return current.value
+                
+                current = current.next
+            return current
 
 
 

@@ -1,16 +1,10 @@
 def word_count(s):
 #     # Your code here
-# def Count_words(s):
-   word_count = 1
-   for i in range(len(s)):
-        if(s[i]=="" or s[i]==''):
-            word_count = 0
-        elif(s[i] == ' ' or s == '\n' or s == '\t'):
-            word_count += 1
-   return word_count
-# s = input("String to search is :")
-# total = word_count(s)
-# print("Total Number of Words in our input string is: ", total)
+
+   word_count = len(s.split()) 
+   print("There are", word_count, "words in the input string : ",s)
+
+
 
 
 if __name__ == "__main__":
