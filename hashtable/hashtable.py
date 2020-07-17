@@ -11,73 +11,6 @@ class HashTableEntry:
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
-# class ListNode:
-#         def __init__(self, value):
-#             self.value = value
-#             self.next = None
-
-class LinkList:
-    def __init__(self):
-        self.head = None
-
-    def find(self, value):
-        current = self.head
-
-        while current is not None:
-            if current.value == value:
-                return current
-
-            current = current.next
-        
-        return None
-    
-    # def insert_at_tail(self, value):
-    #     node = ListNode(value)
-
-    #     # if there is no head
-    #     if self.head is None:
-    #         self.head = node
-    #     else:
-    #         current = self.head
-
-    #         while current.next is not None:
-    #             current = current.next
-    #         current.next = node
-
-    def delete(self, value):
-        current = self.head
-
-        # if there is nothing to delete
-        if current is None:
-            return None
-
-        # when deleting head
-        if current.value == value:
-            self.head = current.next
-            return current
-
-        # when deleting something else
-        else:
-            previous = current
-            current = current.next
-
-            while current is not None:
-                if current.value == value: # found it!
-                    previous.next = current.next  # cut current out!
-                    return current # return our deleted node
-
-                else:
-                    previous = current
-                    current = current.next
-
-            return None # if we got here, nothing was found!
-
-    def insert_at_head(self, node):
-        node.next = self.head
-        self.head = node
-
-
-
 class HashTable:
     """
     A hash table that with `capacity` buckets
@@ -86,11 +19,11 @@ class HashTable:
     Implement this.
     """
 
-    def __init__(self, capacity = MIN_CAPACITY):
+    def __init__(self, capacity):
         # Your code here
        self.capacity = capacity
-       self.storage = [LinkList()] * capacity
-       self.item_total = None
+       self.storage = [None] * capacity
+       self.item_total = 0
 
 
     def get_num_slots(self):
@@ -104,7 +37,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        return len(self.storage)
+        return self.capacity
 
 
     def get_load_factor(self):
@@ -115,8 +48,7 @@ class HashTable:
         """
         # Your code here
         # number of things stored in the hash table / number of slots 
-        load = self.item_total/self.capacity
-        return load
+        return self.item_total/self.capacity
 
 
     def fnv1(self, key):
@@ -128,10 +60,13 @@ class HashTable:
         FNV_prime = 1099511628211 
         FNV_offset_basis = 14695981039346656037
         # Your code here
-        hash =  FNV_offset_basis
-        for x in key:
-            hash = hash * FNV_prime
-            hash = hash ** ord(x)
+        hashed_key =  FNV_offset_basis
+
+        byte_keys = key.encode()
+
+        for byte in byte_keys:
+            hashed_key = hashed_key * FNV_prime
+            hashed_key = hashed_key ^ byte
         return hash
     
 
@@ -164,9 +99,42 @@ class HashTable:
         Hash collisions should be handled with Linked List Chaining.
 
         Implement this.
+
         """
+        #  Old Code:
+        
+        # location = self.hash_index(key)
+        # self.storage[location] = HashTableEntry(key, value)
+
+        #--------------------------------------------------
+        # Update Code:
+
+        if self.get_load_factor() > .7:
+            self.resize(self.capacity * 2)
+
+        # hash the key, to get the index
         location = self.hash_index(key)
-        self.storage[location] = HashTableEntry(key, value)
+
+        # check the index, if it's empty put a node there
+        if self.storage[location] is None:
+            self.storage[location] = HashTableEntry(key, value)
+            self.item_total += 1
+      
+        # otherwise, iterate through the linked list
+        else:
+            current_node = self.storage[location]
+            while current_node is not None:
+        ## Check for the key, update value if it's there
+                if current_node.key == key:
+                    current_node.value = value
+                    break
+        ## if we reach the end, add a new node
+                elif current_node.next == None:
+                    current_node.next = HashTableEntry(key, value)
+                    self.item_total += 1
+                    break
+                else:
+                    current_node = current_node.next
        
 
     def delete(self, key):
@@ -178,8 +146,52 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        location = self.hash_index(key)
-        self.storage[location] = None
+
+        # # Old Code:
+        # location = self.hash_index(key)
+        # self.storage[location] = None
+
+        #----------------------------------------------------
+        # Updated Code:
+
+        """
+        Remove the value stored with the given key.
+
+        Print a warning if the key is not found.
+
+        Implement this.
+        """
+        location= self.hash_index(key)
+        # if there's a None at the index
+        if self.storage[location] is None:
+            print("WARNING: sound the alarm, key not found")
+            return
+
+        else:
+            current_node = self.storage[location]
+        # If the target node is the head
+            if current_node.key == key:
+                self.storage[location] = current_node.next
+                self.item_total -= 1
+                
+            else:
+        # And any other node
+                previous_node = current_node
+                current_node = current_node.next
+
+                # now we iterate!
+                while current_node is not None:
+                    if current_node.key == key:
+                        previous_node.next = current_node.next
+                        self.item_total -= 1
+                        return
+
+                    previous_node = current_node
+                    current_node = current_node.next
+
+        # And if it's not found in the linked list
+                print("WARNING got all the way through and did not find it")
+          
 
 
     def get(self, key):
@@ -202,36 +214,54 @@ class HashTable:
         # Updated Code
 
         location = self.hash_index(key)
-        current = self.storage[location]
 
-        # while current is not None:
-        #     if current.key == key:
-        #         return current.value
-            
-        #     current = current.next
-        # return current
-        if current is None:
+        # if there's nothing at the index
+        if self.storage[location] is None:
             return None
 
+        # otherwise, go to the index, iterate through the linked list, and look for the key
         else:
-            while current is not None:
-                if current.key == key:
-                    return current.value
-                
-                current = current.next
-            return current
+            current_node = self.storage[location]
+
+            while current_node is not None:
+
+                if current_node.key == key:
+                    return current_node.value
+
+                current_node = current_node.next
+
+            return None
+
+
 
 
 
     def resize(self, new_capacity):
-        """
-        Changes the capacity of the hash table and
-        rehashes all key/value pairs.
+    #     """
+    #     Changes the capacity of the hash table and
+    #     rehashes all key/value pairs.
 
-        Implement this.
-        """
-        # Your code here
-        pass
+    #     Implement this.
+    #     """
+    #     # Your code here
+     
+                # save our old storage
+        old_storage = self.storage
+        # make a new, bigger storage!
+        self.storage = [None] * new_capacity
+        self.capacity = new_capacity
+
+        # iterate through our hashlist
+        for bucket in old_storage:
+        ## Iterate through every linked list
+            while bucket is not None:
+                ## re-insert key, value
+                key = bucket.key
+                value = bucket.value
+                self.put(key, value)
+                # go on to the next node
+                bucket = bucket.next
+
 
 
 

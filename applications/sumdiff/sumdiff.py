@@ -19,9 +19,9 @@ def sum_diff(q):
         for b in q:
             for c in q:
                 for d in q:
-                    if f(a)+ f(b) == f(c)-f(d):
+                    if f(a) + f(b) == f(c) - f(d):
 
-                         print(f'The sum of {f(a)} + {f(b)}  is equal to the difference of {f(c)}-{f(d)}')
+                         print(f'The sum of {f(a)} + {f(b)} ({f(a) + f(b)}) is equal to the difference of {f(c)}-{f(d)} ({f(c)-f(d)})')
 
 
 print(sum_diff(q))
