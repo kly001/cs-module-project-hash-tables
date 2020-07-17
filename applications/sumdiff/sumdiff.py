@@ -13,3 +13,15 @@ def f(x):
 
 # Your code here
 
+
+def sum_diff(q):
+    for a in q:
+        for b in q:
+            for c in q:
+                for d in q:
+                    if f(a)+ f(b) == f(c)-f(d):
+
+                         print(f(a)+ f(b), f(c)-f(d))
+
+
+print(sum_diff(q))
